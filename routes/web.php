@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [MessageController::class, 'index']);
+
+Route::resource('/message', MessageController::class)->middleware('auth.basic');
+
+Route::get('/user/create', [UserController::class, 'create']);
+Route::post('/user', [UserController::class, 'store']);
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->middleware('auth.basic');
+Route::post('/user/{id}', [UserController::class, 'update'])->middleware('auth.basic');
+
+
+Route::get('/login', [LoginController::class, 'login']);
+Route::post('/toLogin', [LoginController::class, 'toLogin']);
+Route::get('/logout', [LoginController::class, 'logout']);
