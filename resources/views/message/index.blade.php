@@ -28,12 +28,14 @@
         <td>{{$message->content}}</td>
         @if(Auth::check())
             <td>
-                <a href="{{ url('message/' . ($message->id ?? '') . '/edit' ) }}">修改</a>
-                <form action="{{ url( 'message/' . ( $message->id ) ) }}" method="post" class="form_del" >
-                    <input name="_method" type="hidden" value="DELETE"/>
-                    <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
-                    <button type="submit" class="btn btn-danger">刪除</button>
-                </form>
+                @if(Auth::user()->id == $message->user_id)
+                    <a href="{{ url('message/' . ($message->id ?? '') . '/edit' ) }}">修改</a>
+                    <form action="{{ url( 'message/' . ( $message->id ) ) }}" method="post" class="form_del" >
+                        <input name="_method" type="hidden" value="DELETE"/>
+                        <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
+                        <button type="submit" class="btn btn-danger">刪除</button>
+                    </form>
+                @endif
             </td>
         @endif
     </tr>
