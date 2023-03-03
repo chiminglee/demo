@@ -21,16 +21,24 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'author' => 'required|max:255',
-            'description' => 'required|max:2048',
-            'published_at' => 'required|date',
-        ]);
+        $book = new Book();
+        $book->title = $request->input("title");
+        $book->author = $request->input("author");
+        $book->description = $request->input("description");
+        $book->published_at = $request->input("published_at");
 
-        $book = Book::create($validatedData);
+        $book->save();
+        $message = "新增成功";
+        // $validatedData = $request->validate([
+        //     'title' => 'required|max:255',
+        //     'author' => 'required|max:255',
+        //     'description' => 'required|max:2048',
+        //     'published_at' => 'required|date',
+        // ]);
 
-        return redirect()->route('books.index', $book);
+        // $book = Book::create($validatedData);
+
+        return redirect()->route('books.index', $book)->with("message", $message);
     }
     public function show(Book $book)
     {
@@ -45,16 +53,24 @@ class BookController extends Controller
 
     public function update(Request $request, Book $book)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'author' => 'required|max:255',
-            'description' => 'required|max:2048',
-            'published_at' => 'required|date',
-        ]);
+        
+        $book->title = $request->input("title");
+        $book->author = $request->input("author");
+        $book->description = $request->input("description");
+        $book->published_at = $request->input("published_at");
 
-        $book->update($validatedData);
+        $book->save();
+        $message = "修改成功";
+        // $validatedData = $request->validate([
+        //     'title' => 'required|max:255',
+        //     'author' => 'required|max:255',
+        //     'description' => 'required|max:2048',
+        //     'published_at' => 'required|date',
+        // ]);
 
-        return redirect()->route('books.show', $book);
+        // $book->update($validatedData);
+
+        return redirect()->route('books.index', $book)->with("message", $message);
     }
 
     public function destroy(Book $book)

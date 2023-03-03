@@ -4,6 +4,11 @@
 
 @section('content')
 <!-- index.blade.php -->
+@if (\Session::has('message'))
+<div class="alert alert-success text-center">
+	<h2>{!! \Session::get('message') !!}</h2>
+</div>
+@endif
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -22,7 +27,7 @@
                         <tbody>
                             @foreach ($books as $book)
                                 <tr>
-                                    <td>{{ $book->title }}</td>
+                                    <td><a href="{{ route('books.show', $book->id) }}">{{ $book->title }}</a></td>
                                     <td>{{ $book->author }}</td>
                                     <td>{{ $book->published_at }}</td>
                                     <td>
